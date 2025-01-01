@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Task {
+  id          String    @id @default(uuid())
+  title       String
+  description String?
+  dueDate     DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  taskMilestones TaskMilestone[]
+
+  @@map("tasks")
+}
+
+model TaskMilestone {
+  id          String   @id @default(uuid())
+  description String
+  createdAt   DateTime @default(now())
+
+  taskId String
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+  @@map("tasks_milestones")
+}
