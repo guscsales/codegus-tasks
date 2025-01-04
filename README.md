@@ -2,7 +2,7 @@
 
 Create tasks and milestones. This project is the result of a series of videos from my YouTube channel "Codegus" and uses the best practices and technologies for web development.
 
-Videos: https://www.youtube.com/watch?v=lHdPA-CrGYk&list=PLFRnIPKyoBHh0V6iWjKd3UwDpk5eyndAW
+Videos: https://codeg.us/tasks-playlist
 
 ## Installation
 

@@ -10,7 +10,6 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import {Textarea} from "@/components/ui/textarea";
-import {zodResolver} from "@hookform/resolvers/zod";
 import {useForm} from "react-hook-form";
 import {
   NewTaskFormData,
@@ -18,6 +17,7 @@ import {
 } from "@/app/_validators/tasks-validators";
 import {createTask} from "@/app/_services/tasks-services";
 import {useState, useTransition} from "react";
+import {zodResolver} from "@hookform/resolvers/zod";
 
 interface Props {
   trigger: React.ReactNode;
@@ -33,8 +33,17 @@ export default function TasksNewFormSheet({trigger}: Props) {
 
   function onSubmit(data: NewTaskFormData) {
     startIsSaving(async () => {
-      await createTask(data);
-      setIsOpen(false);
+      try {
+        await createTask(data);
+        setIsOpen(false);
+      } catch (e) {
+        const errors = JSON.parse(
+          (e as Error).toString().replace("Error: ", "")
+        );
+        console.log(errors);
+
+        alert("Erro ao criar tarefa");
+      }
     });
   }
 

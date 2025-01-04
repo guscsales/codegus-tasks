@@ -17,7 +17,7 @@ export async function createTask(data: NewTaskFormData) {
   const parsedData = newTaskFormSchema.safeParse(data);
 
   if (!parsedData.success) {
-    return {error: parsedData.error.message};
+    throw new Error(parsedData.error.message);
   }
 
   const prisma = new PrismaClient();
