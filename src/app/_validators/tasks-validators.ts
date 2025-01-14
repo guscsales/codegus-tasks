@@ -31,7 +31,7 @@ export const newTaskFormSchema = z.object({
       }
     )
     .optional(),
-  description: z.string().min(1, {message: "Campo obrigatório"}),
+  description: z.string().optional(),
 });
 
 export type NewTaskFormData = z.infer<typeof newTaskFormSchema>;

@@ -11,19 +11,19 @@ export default async function Home() {
   return (
     <div className="grid grid-cols-3 gap-2">
       <Card>
-        <CardHeader>Quantidade de Tarefas</CardHeader>
+        <CardHeader>Total</CardHeader>
         <CardContent>
           <span className="text-4xl font-bold">{tasksCount}</span>
         </CardContent>
       </Card>
       <Card>
-        <CardHeader>Tarefas Concluídas</CardHeader>
+        <CardHeader>Abertas</CardHeader>
         <CardContent>
           <span className="text-4xl font-bold">TBD</span>
         </CardContent>
       </Card>
       <Card>
-        <CardHeader>Tarefas Abertas</CardHeader>
+        <CardHeader>Concluídas</CardHeader>
         <CardContent>
           <span className="text-4xl font-bold">TBD</span>
         </CardContent>

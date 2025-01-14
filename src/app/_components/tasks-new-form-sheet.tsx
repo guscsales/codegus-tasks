@@ -37,10 +37,14 @@ export default function TasksNewFormSheet({trigger}: Props) {
         await createTask(data);
         setIsOpen(false);
       } catch (e) {
-        const errors = JSON.parse(
-          (e as Error).toString().replace("Error: ", "")
-        );
-        console.log(errors);
+        try {
+          const errors = JSON.parse(
+            (e as Error).toString().replace("Error: ", "")
+          );
+          console.error(errors);
+        } catch{
+          console.error(e);
+        }
 
         alert("Erro ao criar tarefa");
       }
@@ -53,7 +57,7 @@ export default function TasksNewFormSheet({trigger}: Props) {
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
-      <SheetTrigger onClick={handleReset}>{trigger}</SheetTrigger>
+      <SheetTrigger onClick={handleReset} asChild>{trigger}</SheetTrigger>
       <SheetContent>
         <form onSubmit={form.handleSubmit(onSubmit)}>
           <SheetHeader>

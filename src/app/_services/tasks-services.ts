@@ -5,6 +5,7 @@ import {
   newTaskFormSchema,
   NewTaskFormData,
 } from "@/app/_validators/tasks-validators";
+import {revalidatePath} from "next/cache";
 
 function convertToISO(dateString: string) {
   const [day, month, year] = dateString.split("/").map(Number);
@@ -31,4 +32,7 @@ export async function createTask(data: NewTaskFormData) {
         : null,
     },
   });
+
+  revalidatePath("/");
+  revalidatePath("/tasks");
 }
