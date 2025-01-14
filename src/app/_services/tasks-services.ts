@@ -1,11 +1,13 @@
 "use server";
 
-import {PrismaClient} from "@prisma/client";
+import {PrismaClient, TaskStatus} from "@prisma/client";
 import {
   newTaskFormSchema,
   NewTaskFormData,
 } from "@/app/_validators/tasks-validators";
 import {revalidatePath} from "next/cache";
+
+const prisma = new PrismaClient();
 
 function convertToISO(dateString: string) {
   const [day, month, year] = dateString.split("/").map(Number);
@@ -21,8 +23,6 @@ export async function createTask(data: NewTaskFormData) {
     throw new Error(parsedData.error.message);
   }
 
-  const prisma = new PrismaClient();
-
   await prisma.task.create({
     data: {
       title: parsedData.data.title,
@@ -35,4 +35,24 @@ export async function createTask(data: NewTaskFormData) {
 
   revalidatePath("/");
   revalidatePath("/tasks");
+}
+
+export async function updateTaskStatus(taskId: string, status: TaskStatus) {
+  await prisma.task.update({
+    where: {id: taskId},
+    data: {
+      status:
+        status === TaskStatus.IN_PROGRESS
+          ? TaskStatus.COMPLETED
+          : TaskStatus.IN_PROGRESS,
+    },
+  });
+
+  revalidatePaths(["/", "/tasks"]);
+}
+
+function revalidatePaths(paths: string[]) {
+  for (const path of paths) {
+    revalidatePath(path);
+  }
 }

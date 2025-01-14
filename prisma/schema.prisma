@@ -7,13 +7,19 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum TaskStatus {
+  IN_PROGRESS
+  COMPLETED
+}
+
 model Task {
-  id          String    @id @default(uuid())
+  id          String     @id @default(uuid())
   title       String
   description String?
   dueDate     DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  status      TaskStatus @default(IN_PROGRESS)
 
   taskMilestones TaskMilestone[]
 
